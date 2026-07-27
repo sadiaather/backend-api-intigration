@@ -9,9 +9,9 @@ dotenv.config()
 export const createProject = async (req,res)=> {
     console.log(req.body);
     
-    const {developerName,tiltle,description,hostedUrl}=req.body
+    const {developerName,title,description,hostedUrl}=req.body
 
-    if(!developerName || !tiltle || !description || !hostedUrl){
+    if(!developerName || !title || !description || !hostedUrl){
          res.status(502).json({
     success :false,
     message:"some thing is missing"
@@ -22,7 +22,7 @@ export const createProject = async (req,res)=> {
     const result = await Project.create({
         developerName:developerName,
         description:description,
-        tiltle:tiltle,
+        title:title,
         hostedUrl:hostedUrl
     })
     res.status(200).json({
@@ -49,17 +49,22 @@ try{
       success:false,
       message:"no projects "
     })
-    return;
-
-  }
+   
+return;
+  } 
   res.status(201).json({
     success:true,
     message:"fetch all projects successsfully",
-    data :Project
+    data :project
   })
 }
 catch(err){
   console.log(err.message);
   
+    return res.status(500).json({
+      success: false,
+      message: "err.message",
+    });
+  }
 }
-} 
+

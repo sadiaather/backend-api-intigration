@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import SignUp from "./pages/SignUp.jsx"
-
+import Login from "./pages/Login.jsx";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 const App = () => {
@@ -14,9 +14,9 @@ const App = () => {
       <BrowserRouter>
         <Navbar expand="lg" className="bg-body-tertiary">
           <Container>
-            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
+              <Nav className="ms-auto  mb-2 gap-4" >
                 <NavLink
                   to="/"
                   className={({ isActive }) => {
@@ -33,6 +33,16 @@ const App = () => {
                 >
                   SignUp
                 </NavLink>
+
+                 
+                  <NavLink
+                  to="/login"
+                  className={({ isActive }) => {
+                    `${isActive}? bg-primary : bg-success `;
+                  }}
+                >
+                  Login
+                </NavLink>
               
               </Nav>
             </Navbar.Collapse>
@@ -42,6 +52,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signUp" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
       

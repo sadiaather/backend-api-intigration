@@ -25,14 +25,10 @@ try{
 const hashedPassword = await bcrypt.hash(password, 10);
 
 const result = await User.create({name,email,password: hashedPassword})
-res.status(200).json({
-  success:true,
-  message:"user created successfully",
-  data:result
-});
+
 
 const token = await jwt.sign({
-  userId:User._id},secret)
+  userId:result._id},secret)
   res.status(200).json({
   success:true,
   message:" successful",
@@ -40,7 +36,10 @@ const token = await jwt.sign({
 })}
 catch(error){
   console.error(chalk.red("Error during signup:", error));
-
+return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
 } 
 }
 
@@ -58,12 +57,7 @@ export const login = async (req,res)=>{
   return
 }
 const isMatch = await bcrypt.compare(password,user.password)
-if(isMatch){
-  res.status(200).json({
-    success:false,
-    message:"invalid password",
-  })
-}
+
 const token =jwt.sign({userId:user._id},secret)
 res.status(200).json({
   success:true,
