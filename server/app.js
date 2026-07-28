@@ -6,9 +6,7 @@ import projectRoutes from "./routes/projectRoutes.js"
 import dns from "node:dns";
 import { allProjects } from "./controllers/ProjectController.js";
 import { Server } from "socket.io";
-import { createServer } from "http";
-import { skipMiddlewareFunction } from "mongoose";
-import socket from "../client/src/socket.io.js";
+
 import http from "http"
 
 dns.setServers=(["8.8.8.8", "1.1.1.1"]);
@@ -28,23 +26,16 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
-  socket.on("message", (data) => {
-    console.log("Message:", data);
+})
 
-    // Sab clients ko message bhejna
-    io.emit("receive-message", data);
-  });
 
-  socket.on("disconnect", () => {
-    console.log("User Disconnected:", socket.id);
-  });
-});
 
 const PORT = 5000;
 connectDB()
 
 app.use(cors({
   origin: "http://localhost:5173",
+  methods: ["GET", "POST","DELETE", "PUT"],
   credentials: true,
 }));
 
