@@ -6,7 +6,7 @@ import chalk from "chalk";
 import dns from "dns";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
-dns.setDefaultResultOrder("ipv4first");
+// dns.setDefaultResultOrder("ipv4first");
   
 dotenv.config()
 

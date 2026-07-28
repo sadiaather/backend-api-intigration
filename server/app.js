@@ -9,12 +9,13 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import { skipMiddlewareFunction } from "mongoose";
 import socket from "../client/src/socket.io.js";
+import http from "http"
 
 dns.setServers=(["8.8.8.8", "1.1.1.1"]);
 
 const app = express();
 // HTTP Server
-const server = createServer(app);
+const server = http.createServer (app);
 
 // Socket.IO Server
 const io = new Server(server, {
