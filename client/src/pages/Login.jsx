@@ -4,8 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+   const notify = () => toast('Account created successfully');
+        const navigate = useNavigate();
+
 const [formData,setFormData]= useState({
   email : "",
   password : ""
@@ -23,17 +27,7 @@ const handleSubmit =(e)=>{
   e.preventDefault()
   console.log(formData);
   try {
-              function connect() {
-        socket.on("connect", () => {
-          console.log("Connected");
-          console.log(socket.id);
-        });
-
-        return () => {
-          socket.off("connect");
-        };
-        connect();
-      }     
+             
          let res = axios.post("http://localhost:5000/api/auth/login", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": "application/json",
@@ -43,12 +37,11 @@ const handleSubmit =(e)=>{
 
                 if (res.data.success) {
 
-                    // toast.success("Account created successfully")
-                    
-
+                    toast.success("Account created successfully")
+            
                     localStorage.setItem("token", res?.data?.token)
                   
-
+                     Navigate("/")
                 }
             }))
 

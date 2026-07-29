@@ -1,14 +1,20 @@
 import React from 'react'
+import { toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-// import { toast } from "react-toastify";
-import { useState } from 'react';
+
+import { useState} from 'react';
 import axios from 'axios';
+import { useContext } from 'react';
+import { GlobalContext } from '../context/context';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
-  //  const notify = () => toast('Account created successfully');
+   const notify = () => toast('Account created successfully');
+   let {state:{isloggedIn},dispatch}= useContext(GlobalContext);
+   const navigate= useNavigate()
   const [formData,setFormData]= useState({
     name :"",
     email:"",
@@ -22,43 +28,42 @@ const SignUp = () => {
  })
   }
 
-  const handleSubmit= (e)=>{
+  const logged = ()=>{
+    isloggedIn = true
+    dispatch({
+        type:"USER-LOGIN",
+        payload:{isloggedIn,formData}
+    })
+  }
+
+  const handleSubmit= async (e)=>{
     e.preventDefault()
     console.log(formData);
     
         try {
-              function connect() {
-        socket.on("connect", () => {
-          console.log("Connected");
-          console.log(socket.id);
-        });
-
-        return () => {
-          socket.off("connect");
-        };
-        connect();
-      }
-            let res = axios.post("http://localhost:5000/api/auth/signup", JSON.stringify(formData), {
+              
+            let res = await  axios.post("http://localhost:5000/api/auth/signup", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": "application/json",
                 }
             }
             ).then((res => {
-
                 if (res.data.success) {
 
-                    // toast.success("Account created successfully")
+                    toast.success("Account created successfully")
                     
-
                     localStorage.setItem("token", res?.data?.token)
                   
+                      navigate("/")
 
+                      logged()
                 }
             }))
 
 
         } catch (err) {
             console.log(err)
+            toast.error("signup failed")
         }
     }
     

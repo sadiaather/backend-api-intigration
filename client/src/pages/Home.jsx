@@ -23,8 +23,10 @@ const Home = () => {
         setProject(res.data.data);
       });
 
+   
+
     return () => {
-      socket.off("connect");
+      socket.off("conpnsenect");
       socket.off("projectCreated");
     };
   }, []);
@@ -33,11 +35,12 @@ const Home = () => {
   return (
    <>
 
-      <div className="d-flex gap-5 p-4 justify-content-center">
+    
+        <div className=" row d-flex gap-4 p-4 justify-content-center bg  ">
       {Array.isArray(project) &&
         project.map(({ title, description, hostedUrl, developerName, _id }) => (
            <Card
-            id={_id}
+            key={_id}
             title={title}
             developerName={developerName}
             des={description}
@@ -45,6 +48,7 @@ const Home = () => {
           />
           ))}
           </div>
+  
     </>
   );
 };
