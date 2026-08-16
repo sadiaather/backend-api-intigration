@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import socket from "../socket.io.js";
 import Card from "../component/CardComponent.jsx";
+import { useParams } from "react-router-dom";
 
 const Home = () => {
   const [project, setProject] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -22,15 +24,17 @@ const Home = () => {
         console.log(res.data.data);
         setProject(res.data.data);
       });
+           
+  
 
    
-
-    return () => {
+     return () => {
       socket.off("conpnsenect");
       socket.off("projectCreated");
     };
   }, []);
   console.log(project);
+
 
   return (
    <>
@@ -38,16 +42,22 @@ const Home = () => {
     
         <div className=" row d-flex gap-4 p-4 justify-content-center bg  ">
       {Array.isArray(project) &&
-        project.map(({ title, description, hostedUrl, developerName, _id }) => (
+        project.map(({ title, description, hostedUrl, developerName, _id,  }) => (
            <Card
             key={_id}
             title={title}
             developerName={developerName}
             des={description}
             hl={hostedUrl}
+          id={_id}
+         
+             
           />
+          
           ))}
+         
           </div>
+  
   
     </>
   );

@@ -1,7 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import "../App.css"
+import axios from 'axios';
+import { useState ,useEffect} from 'react';
+import { Toast } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
-function CardComponent({id,title,developerName,des,hl}) {
+
+function CardComponent({id,title,developerName,des,hl}) {    
+
   return (
     
     <div  className="my-card col-lg-4 col-md-6 col-sm-12 mb-4 ">
@@ -12,7 +18,15 @@ function CardComponent({id,title,developerName,des,hl}) {
         <Card.Text>
          {des}
         </Card.Text>
-        <Card.Link href="#">{hl}</Card.Link>
+         
+               <a
+                    href={hl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View Project
+                  </a>
+       
       </Card.Body>
     </Card>
     </div>

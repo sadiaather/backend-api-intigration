@@ -5,9 +5,20 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useContext } from "react";
+import { GlobalContext } from "../context/context.jsx";
+
+
+
 
 const Login = () => {
-   const notify = () => toast('Account created successfully');
+
+    
+    const { dispatch } = useContext(GlobalContext);
+
+
+   const notify = () => toast('Account login successfully');
         const navigate = useNavigate();
 
 const [formData,setFormData]= useState({
@@ -36,12 +47,16 @@ const handleSubmit =(e)=>{
             ).then((res => {
 
                 if (res.data.success) {
-
-                    toast.success("Account created successfully")
             
-                    localStorage.setItem("token", res?.data?.token)
-                  
-                     Navigate("/")
+                    localStorage.setItem("token", res?.data?.token),
+                 
+                        dispatch({
+                               type: "USER_LOGIN",
+                              payload:res.data.data // API se jo user data aaya
+                  });
+                 
+                   toast.success("Account login successfully")     
+                     navigate("/")
                 }
             }))
 

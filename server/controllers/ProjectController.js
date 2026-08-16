@@ -68,3 +68,73 @@ catch(err){
   }
 }
 
+                                            
+ 
+  export const deleteProject = async (req,res)=>{
+    const {id} = req.params  
+        console.log(id);
+  try{
+               const result = await Project.findByIdAndDelete(id)
+      console.log(result);
+
+if(!result){
+     return res.status(404).json({
+        success: false,
+        message: "Project not found",
+      });
+    }
+
+      res.status(200).json({        
+       success:true,
+       message:"project delete successfuly" ,    
+        data :  result,
+  })
+  }
+catch(error){
+  console.log(error.message);
+   res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  
+}}
+
+  export const updateProject = async (req,res)=>{
+    const {id} = req.params  
+        console.log(id);
+        const {developerName,title,description,hostedUrl}=req.body    
+try{
+  
+        const result = await Project.findByIdAndUpdate(id,{
+          developerName:developerName,
+          description:description,  
+                title: title,
+             hostedUrl:hostedUrl,
+            
+               },{
+                 new: true
+               })
+
+         if(!result){
+            return res.status(404).json({
+        success: false,
+        message: "Project not found"
+      });
+         }
+
+    res.status(200).json({
+      success:true,
+      message:"project update successfully",
+      data:result
+    });
+}
+catch(error){
+console.log(error.message);
+  return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+
+}
+}
+

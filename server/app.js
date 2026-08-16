@@ -7,6 +7,7 @@ import dns from "node:dns";
 import { allProjects } from "./controllers/ProjectController.js";
 import { Server } from "socket.io";
 
+
 import http from "http"
 
 dns.setServers=(["8.8.8.8", "1.1.1.1"]);
@@ -49,6 +50,7 @@ app.use((req,res,next)=>{
 
 app.use ('/api/auth',authRoutes)
 app.use('/api/',projectRoutes)
+
 
 
 
